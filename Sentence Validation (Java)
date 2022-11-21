@@ -1,0 +1,186 @@
+import java.util.Scanner;
+
+public class Main {
+	
+	//Method to determine if a string is valid - a “valid” sentence is defined as:
+	/*
+	•	String starts with a capital letter.
+	•	String has an even number of quotation marks.
+	•	String ends with one of the following sentence termination characters: ".", "?", "!".
+	•	String has no period characters other than the last character.
+	•	Numbers below 13 are spelled out (”one”, “two”, "three”, etc…).
+    */
+	
+	//Validation Method - String starts with a capital letter.
+	static void capLetterValidation(String str)
+	{
+		//Checks if character at position 0, is upper-case.
+		if (Character.isUpperCase(str.charAt(0)))
+		{
+			System.out.println("PASSED!");
+		} else
+		{
+			System.out.println("Invalid Sentence!");
+			System.exit(0);
+		}
+	}
+	
+	//Validation Method - String has an even number of quotation marks.
+	static void evenQuoteValidation(String str)
+	{
+		//Int to keep check of quotes.
+		int quoteCount = 0;
+		//Changing str to char array.
+		for(char ch : str.toCharArray())
+		{
+		  if(ch == '"') 
+			  quoteCount++;
+		}
+		//Check for even amount.
+		boolean even = quoteCount % 2 == 0;
+		if (even == true)
+		{
+			System.out.println("PASSED!");
+		}
+		else
+		{
+			System.out.println("Invalid Sentence!");
+			System.exit(0);	
+		}
+
+	}
+	
+	//Validation Method - String ends with one of the following sentence termination characters: ".", "?", "!"
+	static void endPunctValidation(String str)
+	{
+		//Use of REGEX
+		//Seeing if end of sentence uses any punctuation.
+		if (str.matches(".*\\p{Punct}"))
+		{
+			System.out.println("PASSED!");
+
+		} else
+		{
+			System.out.println("Invalid Sentence!");
+			System.exit(0);
+		}
+
+	}
+	
+	//Validation Method - String has no period characters other than the last character.
+	static void periodValidation(String str)
+	{
+		//Int to keep check of period marks.
+		int periodMarkCount = 0;
+		//Checks for all period marks within str.
+		for(char ch : str.toCharArray())
+		{
+		  if(ch == '.') 
+			  periodMarkCount++;
+		}
+		
+		//if multiple period marks within string, returning invalid.
+		if (periodMarkCount <= 1)
+		{
+			System.out.println("PASSED!");
+
+		}
+		else
+		{
+			System.out.println("Invalid Sentence!");
+			System.exit(0);	
+		}
+	}
+	
+	//Validation Method - Numbers below 13 are spelled out (”one”, “two”, "three”, etc…).
+	static void numbersBelowValidation(String str)
+	{
+		//First we replace all the non-numeric characters with space.
+		str = str.replaceAll("[^\\d]", " ");
+	
+		//Remove all the trailing spaces
+		str = str.trim();
+	
+		//Replace consecutive white spaces with one white space.
+		str = str.replaceAll(" +", " ");
+	
+		//Check if string is empty.
+		if (str.equals(""))
+		return;
+	
+		//Changes str to int.
+		int numCheck = Integer.parseInt(str);
+		
+		//Checks if number is below 13.
+		if (numCheck < 13)
+		{
+			System.out.println("Invalid Sentence!");
+			System.exit(0);
+		}
+		else
+		{
+			System.out.println("PASSED!");
+	
+		}
+	}
+
+	//Method for all validation
+	public static void validSentence(String input)
+	{	
+		System.out.println("Your inputted string is: " + "\n" + input);	
+		System.out.println("-----------------");
+		
+		System.out.println("[CHECK 1]: String starts with a capital letter.");
+		//Validation - String starts with a capital letter.
+		capLetterValidation(input);	
+				
+		System.out.println("[CHECK 2]: String has an even number of quotation marks.");
+		//Validation - String has an even number of quotation marks.
+		evenQuoteValidation(input);
+		
+		System.out.println("[CHECK 3]: String ends with one of the following sentence termination characters: \".\", \"?\", \"!\"");
+		//Validation - String ends with one of the following sentence termination characters: ".", "?", "!"
+		endPunctValidation(input);	
+			
+		System.out.println("[CHECK 4]: String has no period characters other than the last character.");
+		//Validation - String has no period characters other than the last character.
+		periodValidation(input);
+							
+		System.out.println("[CHECK 5]: Numbers below 13 are spelled out");
+		//Validation - Numbers below 13 are spelled out (”one”, “two”, "three”, etc…).
+		numbersBelowValidation(input); 
+	}
+	
+	public static void main(String[] args) {
+		
+		System.out.println("This is a program to check if a sentence is valid through certain checks!");
+		
+		//Range of valid sentences.
+		String s_ValidSentence1 = "The quick brown fox said \"hello Mr lazy dog\".";
+		String s_ValidSentence2 = "The quick brown fox said hello Mr lazy dog.";
+		String s_ValidSentence3 = "One lazy dog is too few, 13 is too many.";
+		String s_ValidSentence4 = "One lazy dog is too few, thirteen is too many.";
+		String s_ValidSentence5 = "How many \"lazy dogs\" are there?";
+
+		//Range of invalid sentences.
+		String s_InvalidSentence1 = "The quick brown fox said \"hello Mr.lazy dog\".";
+		String s_InvalidSentence2 = "the quick brown fox said \"hello Mr lazy dog\".";
+		String s_InvalidSentence3 = "\"The quick brown fox said \"hello Mr lazy dog.\"";
+		String s_InvalidSentence4 = "One lazy dog is too few, 12 is too many.";
+		String s_InvalidSentence5 = "Are there 11, 12, or 13 lazy dogs?";
+		String s_InvalidSentence6 = "There is no punctuation in this sentence";
+		
+		
+		//Creating your own sentence to check
+		System.out.println("Please insert you own sentence:");
+		Scanner scanner = new Scanner(System.in);
+		String userSentence = scanner.nextLine();
+		System.out.println("-----------------");
+		
+		validSentence(userSentence);
+		//Usecase example.
+		//validSentence(s_InvalidSentence4);
+
+		};
+
+	}
